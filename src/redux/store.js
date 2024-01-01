@@ -6,4 +6,5 @@ const store = configureStore({
     contacts: contactsReducer,
   },
 });
-export { store };
+
+export default store;

@@ -1,0 +1,13 @@
+.section {
+    margin-left: 10%;
+    margin-top: 2%;
+    background-color: white;
+    width: 35%;
+    padding: 10px;
+}
+
+.section h2 {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}

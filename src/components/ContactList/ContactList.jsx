@@ -1,25 +1,23 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import Filter from '../Filter/Filter';
 import { filterContact } from '../../redux/Contacts/contactsSlice';
 import { deleteContact } from '../../redux/Contacts/contactsOperations';
+import css from './ContactList.module.css';
 
-export default function ContactList() {
+const ContactList = () => {
   const contacts = useSelector(state => state.contacts.contacts);
   const dispatch = useDispatch();
   const filter = useSelector(state => state.contacts.filter);
-  console.log(contacts);
 
   const handlerFilter = e => {
     dispatch(filterContact(e.target.value));
   };
 
-  const filteredContacts = () => {
-    return contacts.filter(el =>
-      el.name.toLowerCase().includes(filter.toLowerCase())
-    );
-  };
-
+  const filteredContacts = contacts.filter(el =>
+    el.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   const handlerDelete = id => {
     dispatch(deleteContact(id));
@@ -28,23 +26,21 @@ export default function ContactList() {
   return (
     <>
       <Filter handlerFilter={handlerFilter} />
-      <ul>
-        {filteredContacts()?.map(({ id, name, number }) => {
-          return (
-            <li key={id}>
-              <p>
-                {name}: {number}
-              </p>
-              <button type="button" onClick={() => handlerDelete(id)}>
-                Delete
-              </button>
-            </li>
-          );
-        })}
+      <ul className={css.list}>
+        {filteredContacts.map(({ id, name, number }) => (
+          <li key={id}>
+            <p>
+              {name}: {number}
+            </p>
+            <button className={css.buttons} type="button" onClick={() => handlerDelete(id)}>
+              Delete
+            </button>
+          </li>
+        ))}
       </ul>
     </>
   );
-}
+};
 
 ContactList.propTypes = {
   contactList: PropTypes.arrayOf(
@@ -55,3 +51,5 @@ ContactList.propTypes = {
     })
   ),
 };
+
+export default ContactList;
